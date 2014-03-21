@@ -8,3 +8,7 @@ With Ant
 2. see the tests  : ant test
 3. play           : ant play
 
+With Gradle
+1. no need to install - simply use the Gradle wrapper (gradlew or gradlew.bat)
+2. see the tests  : ./gradlew test
+3. play           : ./gradlew play

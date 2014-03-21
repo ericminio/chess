@@ -1,0 +1,18 @@
+apply plugin: 'java'
+
+libsDirName = 'lib'
+
+dependencies {
+    testCompile fileTree(dir: libsDirName, includes: ['*.jar'])
+}
+
+task(play, dependsOn: 'classes', type: JavaExec) {
+    main = 'Launcher'
+    classpath = sourceSets.main.runtimeClasspath
+}
+ 
+
+// bootstrapping Gradle Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
