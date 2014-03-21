@@ -2,17 +2,39 @@ apply plugin: 'java'
 
 libsDirName = 'lib'
 
+project.ext {
+    keyboardArg = '-Dcom.objogate.wl.keyboard=US'
+    mainClass = 'Launcher'
+}
+
+classes << {
+    copy {
+        description 'Copies the PNG icons over - could be moved to resourceDir'
+        include '**/*.png'
+        from 'src/main/java/gui/renderers'
+        into 'build/classes/main/gui/renderers'
+    }
+}
+
 dependencies {
     testCompile fileTree(dir: libsDirName, includes: ['*.jar'])
 }
 
-task(play, dependsOn: 'classes', type: JavaExec) {
-    main = 'Launcher'
-    classpath = sourceSets.main.runtimeClasspath
+test {
+    jvmArgs keyboardArg
 }
- 
 
-// bootstrapping Gradle Wrapper
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.11'
+task play(dependsOn: 'classes', type: JavaExec) {
+    description 'Starts the game, letting user play'
+    main = mainClass
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs keyboardArg
 }
+
+task debug(dependsOn: 'classes', type: JavaExec) {
+    description 'Starts the game in debug mode, waiting for debugger to attach before starting a new game'
+    main = mainClass
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005", keyboardArg
+}
+
