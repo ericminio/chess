@@ -7,6 +7,12 @@ project.ext {
     mainClass = 'Launcher'
 }
 
+gradle.projectsEvaluated {
+    tasks.withType(Compile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
 classes << {
     copy {
         description 'Copies the PNG icons over - could be moved to resourceDir'

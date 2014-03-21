@@ -22,9 +22,11 @@ public class GameDriver extends JFrameDriver {
         super(new GesturePerformer(), new AWTEventQueueProber(), named( TITLE ), showingOnScreen());
         ((AWTEventQueueProber) prober()).setTimeout( 100 );
     }
+    @SuppressWarnings("unchecked")
     public JLabelDriver label(String name) {
         return new JLabelDriver(this, ComponentDriver.named( name ));
     }
+    @SuppressWarnings("unchecked")
     public JButtonWithIconDriver button(String name) {
         return new JButtonWithIconDriver(this, JButton.class, ComponentDriver.named( name ));
     }

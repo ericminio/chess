@@ -19,6 +19,7 @@ public class RendererFactory {
         return "gui.renderers." + getClassOf( piece ) + "Renderer";
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public PieceRenderer rendererInstanceOf(Piece piece) {
         try {
             Class rendererClass = Class.forName( getRendererClass(piece) );
