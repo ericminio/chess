@@ -13,7 +13,7 @@ import gui.renderers.RoockRenderer;
 import javax.swing.*;
 
 import static gui.GameFrame.TITLE;
-import static org.junit.internal.matchers.StringContains.containsString;
+import static org.hamcrest.core.StringContains.containsString;
 
 public class GameDriver extends JFrameDriver {
 

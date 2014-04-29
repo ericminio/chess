@@ -10,8 +10,8 @@ import static builders.PawnBuilder.aPawn;
 import static builders.QueenBuilder.aQueen;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
-import static org.junit.internal.matchers.StringContains.containsString;
 
 @Imhotep(level="Domain")
 public class MoveAndEatTest {
