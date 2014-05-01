@@ -43,17 +43,18 @@
     <target name="compile_all" depends="compile"
             description="compile the source and the tests " >
         <javac includeAntRuntime="false" srcdir="${tests}" destdir="${build}"
-               classpath="${lib}/junit.jar; ${lib}/hamcrest-all-1.2.jar; ${lib}/mockito-all-1.8.5.jar; ${lib}/windowlicker-core-DEV.jar; ${lib}/windowlicker-swing-DEV.jar; ${lib}/imhotep-20140319.jar" />
+               classpath="${lib}/junit-dep-4.11.jar; ${lib}/com.springsource.org.objenesis-1.0.0.jar; ${lib}/mockito-core-1.9.5.jar; ${lib}/windowlicker-core-DEV.jar; ${lib}/windowlicker-swing-DEV.jar; ${lib}/imhotep-20140319.jar; ${lib}/hamcrest-all-1.2.jar" />
     </target>
 
     <target name="test" depends="compile_all">
         <junit haltonfailure="on">
             <classpath>
-                <pathelement location="${lib}/junit.jar"/>
-                <pathelement location="${lib}/hamcrest-all-1.2.jar"/>
-                <pathelement location="${lib}/mockito-all-1.8.5.jar"/>
+                <pathelement location="${lib}/junit-dep-4.11.jar"/>
+                <pathelement location="${lib}/com.springsource.org.objenesis-1.0.0.jar"/>
+                <pathelement location="${lib}/mockito-core-1.9.5.jar"/>
                 <pathelement location="${lib}/windowlicker-core-DEV.jar"/>
                 <pathelement location="${lib}/windowlicker-swing-DEV.jar"/>
+                <pathelement location="${lib}/hamcrest-all-1.2.jar"/>
                 <pathelement location="${build}" />
             </classpath>
             <batchtest fork="yes" todir="${reports}">
