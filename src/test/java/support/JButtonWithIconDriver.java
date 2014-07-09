@@ -11,6 +11,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 
 public class JButtonWithIconDriver extends JButtonDriver {
 
+    @SuppressWarnings("unchecked")
     public JButtonWithIconDriver(com.objogate.wl.swing.driver.ComponentDriver<? extends java.awt.Component> parentOrOwner,
                                  Class<JButton> componentType,
                                  org.hamcrest.Matcher<? super JButton>... matchers) {

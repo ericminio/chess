@@ -1,0 +1,62 @@
+apply plugin: 'java'
+
+libsDirName = 'lib'
+
+project.ext {
+    keyboardArg = '-Dcom.objogate.wl.keyboard=US'
+    mainClass = 'Launcher'
+}
+
+clean << {
+    "target dists reports".split().each() {
+         println it
+         new File(it).deleteDir()
+    }
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(Compile) {
+        options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+    }
+}
+
+classes << {
+    copy {
+        description 'Copies the PNG icons over - could be moved to resourceDir'
+        include '**/*.png'
+        from 'src/main/java/gui/renderers'
+        into 'build/classes/main/gui/renderers'
+    }
+}
+
+dependencies {
+    testCompile fileTree(dir: libsDirName, includes: ['*.jar'])
+}
+
+test {
+    jvmArgs keyboardArg
+}
+
+task report(dependsOn: 'classes') {
+    ant.taskdef(name: 'imhotep', classname: 'imhotep.ImhotepAntTask')
+    ant.imhotep(sourcedir="src", destdir="reports") {
+        level { name 'Unit' }
+        level { name 'Dmain' }
+        level { name 'UI' }
+    }
+}
+
+task play(dependsOn: 'classes', type: JavaExec) {
+    description 'Starts the game, letting user play'
+    main = mainClass
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs keyboardArg
+}
+
+task debug(dependsOn: 'classes', type: JavaExec) {
+    description 'Starts the game in debug mode, waiting for debugger to attach before starting a new game'
+    main = mainClass
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs "-Xdebug", "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005", keyboardArg
+}
+
