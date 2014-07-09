@@ -7,6 +7,13 @@ project.ext {
     mainClass = 'Launcher'
 }
 
+clean << {
+    "target dists reports".split().each() {
+         println it
+         new File(it).deleteDir()
+    }
+}
+
 gradle.projectsEvaluated {
     tasks.withType(Compile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
@@ -28,6 +35,15 @@ dependencies {
 
 test {
     jvmArgs keyboardArg
+}
+
+task report(dependsOn: 'classes') {
+    ant.taskdef(name: 'imhotep', classname: 'imhotep.ImhotepAntTask')
+    ant.imhotep(sourcedir="src", destdir="reports") {
+        level { name 'Unit' }
+        level { name 'Dmain' }
+        level { name 'UI' }
+    }
 }
 
 task play(dependsOn: 'classes', type: JavaExec) {
